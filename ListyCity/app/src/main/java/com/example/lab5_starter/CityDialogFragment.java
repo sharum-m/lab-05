@@ -54,8 +54,8 @@ public class CityDialogFragment extends DialogFragment {
         if (Objects.equals(tag, "City Details") && bundle != null){
             city = (City) bundle.getSerializable("City");
             assert city != null;
-            editMovieName.setText(city.getName());
-            editMovieYear.setText(city.getProvince());
+            editMovieName.setText(city.getCityName());
+            editMovieYear.setText(city.getProvinceName());
         }
         else {
             city = null;}

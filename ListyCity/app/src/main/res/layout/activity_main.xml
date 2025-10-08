@@ -5,23 +5,57 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:padding="6dp">
+    android:padding="6dp"
+    tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/buttonAddCity"
-        android:text="Add City"
-        android:textSize="20sp"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/inputRow"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="6dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="10dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/city_name_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="City"
+            android:inputType="textCapWords" />
+
+        <EditText
+            android:id="@+id/province_name_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Province"
+            android:inputType="textCapWords" />
+
+        <Button
+            android:id="@+id/buttonAddCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add City"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/buttonDeleteCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DELETE"
+            android:textAllCaps="true"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listviewCities"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAddCity" />
-
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/inputRow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

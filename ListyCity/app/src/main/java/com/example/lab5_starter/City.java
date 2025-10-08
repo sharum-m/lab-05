@@ -2,7 +2,6 @@ package com.example.lab5_starter;
 
 import java.io.Serializable;
 
-// Movie object
 public class City implements Serializable {
 
     // attributes
@@ -15,19 +14,21 @@ public class City implements Serializable {
         this.province = province;
     }
 
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    public String getName() {
+    // ---- Lab-required API ----
+    public String getCityName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setCityName(String name) {
         this.name = name;
     }
+
+    public String getProvinceName() {
+        return province;
+    }
+
+    public void setProvinceName(String province) {
+        this.province = province;
+    }
+
 }
