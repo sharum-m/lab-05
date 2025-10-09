@@ -30,11 +30,8 @@ public class MainActivity extends AppCompatActivity implements CityDialogFragmen
     private EditText addProvinceEditText;
     private ListView cityListView;
     private Button deleteCityButton;
-
     private ArrayList<City> cityArrayList;
     private ArrayAdapter<City> cityArrayAdapter;
-
-    // Firestore
     private FirebaseFirestore db;
     private CollectionReference citiesRef;
     private ListenerRegistration citiesListener;
@@ -58,16 +55,16 @@ public class MainActivity extends AppCompatActivity implements CityDialogFragmen
         deleteCityButton = findViewById(R.id.buttonDeleteCity);
 
 
-        // list + adapter (init before listener)
+        // list + adapter
         cityArrayList = new ArrayList<>();
         cityArrayAdapter = new CityArrayAdapter(this, cityArrayList);
         cityListView.setAdapter(cityArrayAdapter);
 
-        // Firestore
+        // firestore database
         db = FirebaseFirestore.getInstance();
         citiesRef = db.collection("cities");
 
-        // realtime updates: source of truth
+        // realtime updates
         citiesListener = citiesRef.addSnapshotListener((snap, e) -> {
             if (e != null || snap == null) {
                 Log.w("Firestore", "Listen failed.", e);
@@ -84,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements CityDialogFragmen
             cityArrayAdapter.notifyDataSetChanged();
         });
 
-        // add city (writes to Firestore; listener updates UI)
+        // add city
         addCityButton.setOnClickListener(v -> {
             String name = addCityEditText.getText().toString().trim();
             String province = addProvinceEditText.getText().toString().trim();
@@ -106,14 +103,8 @@ public class MainActivity extends AppCompatActivity implements CityDialogFragmen
                 return;
             }
 
-            // Optional: confirm
-            // new AlertDialog.Builder(this).setMessage("Delete " + name + "?")
-            //   .setPositiveButton("Delete", (d, which) -> doDelete(name))
-            //   .setNegativeButton("Cancel", null).show();
-
             doDelete(name);
         });
-        // optional: keep details dialog on item tap
         cityListView.setOnItemClickListener((adapterView, view, i, l) -> {
             City city = cityArrayAdapter.getItem(i);
             CityDialogFragment cityDialogFragment = CityDialogFragment.newInstance(city);
@@ -121,12 +112,11 @@ public class MainActivity extends AppCompatActivity implements CityDialogFragmen
         });
     }
 
-    /** Firestore write (doc id = city name). No local add; listener repopulates list. */
     private void addNewCity(City city) {
         HashMap<String, String> data = new HashMap<>();
-        data.put("Province", city.getProvinceName());   // LAB API
+        data.put("Province", city.getProvinceName());
 
-        citiesRef.document(city.getCityName())          // LAB API
+        citiesRef.document(city.getCityName())
                 .set(data)
                 .addOnSuccessListener(aVoid -> Log.d("Firestore", "City written"))
                 .addOnFailureListener(e ->
@@ -163,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements CityDialogFragmen
         }
     }
 
-    // Dialog callbacks (kept for starter compatibility)
     @Override
     public void updateCity(City city, String title, String year) {
         city.setCityName(title);          // LAB API
@@ -173,6 +162,5 @@ public class MainActivity extends AppCompatActivity implements CityDialogFragmen
 
     @Override
     public void addCity(City city) {
-        // Not used; we add via EditTexts -> Firestore -> listener
     }
 }

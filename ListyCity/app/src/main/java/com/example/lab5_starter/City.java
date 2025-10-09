@@ -14,7 +14,6 @@ public class City implements Serializable {
         this.province = province;
     }
 
-    // ---- Lab-required API ----
     public String getCityName() {
         return name;
     }
